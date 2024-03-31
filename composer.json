@@ -1,0 +1,18 @@
+{
+    "name": "tarikul/post-view-count",
+    "description": "Post View count WordPress Plugin",
+    "type": "wordpress-plugin",
+    "license": "GPLv2",
+    "autoload": {
+        "psr-4": {
+            "Tarikul\\PostViewCount\\": "includes/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Tarikul Islam"
+        }
+    ],
+    "minimum-stability": "dev",
+    "require": {}
+}
