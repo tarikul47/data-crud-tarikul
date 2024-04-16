@@ -1,15 +1,15 @@
 <?php
 /**
- * Plugin Name: Post View Count
+ * Plugin Name: DB Crud
  * Plugin URI: https://onlytarikul.com/project/post-view-count
  * Description: Showing Post View Number by Specific Post shortcode. 
  * Author: Tarikul Islam
  * Version: 1.0.0
  * Author URI: https://onlytarikul.com
- * Text Domain: post-view-count
+ * Text Domain: db-crud
  *
  * @since      1.0.0
- * @package    Post View Count
+ * @package    DB Crud
  * @author     Tarikul Islam
  */
 
@@ -22,7 +22,7 @@ if (!defined('ABSPATH')) {
 
 require "vendor/autoload.php";
 
-use Tarikul\PostViewCount\Core;
+use Tarikul\DbCrud\Core;
 
 /**
  * Main class Initialize 

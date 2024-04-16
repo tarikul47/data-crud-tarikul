@@ -1,6 +1,5 @@
 <?php
-
-namespace Tarikul\PostViewCount;
+namespace Tarikul\DbCrud;
 
 /**
  * Our Main Class 
@@ -25,17 +24,11 @@ class Core
      */
     public function init()
     {
-        // assets class load 
+        // Assets class load 
         new Assets();
 
-        // shortcode class load 
-        new Shortcode();
-
-        // column class load 
-        new Column();
-
-        // post view counter class load 
-        new ViewCounter();
+        //  Admin Page load 
+        new AdminPage();
     }
 
     /**

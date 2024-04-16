@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarikul\PostViewCount;
+namespace Tarikul\DbCrud;
 
 /**
  * Assets Class 
@@ -14,7 +14,7 @@ class Assets extends Helper
     {
         parent::__construct(); // Call the constructor of the parent class
         // assets enqueue 
-        add_action('wp_enqueue_scripts', [$this, 'load_assets']);
+        add_action('admin_enqueue_scripts', [$this, 'load_assets']);
     }
 
     /**
@@ -22,7 +22,7 @@ class Assets extends Helper
      */
     public function load_assets()
     {
-        wp_enqueue_style('post-view-count-style', POST_VIEW_COUNT_PLUGIN_ASSETS_URL . 'css/style.css', [], '1.0');
-        wp_enqueue_script('post-view-count-script', POST_VIEW_COUNT_PLUGIN_ASSETS_URL . 'js/script.js', [], '1.0', true);
+        wp_enqueue_style('db-crud-style', DB_CRUD_PLUGIN_ASSETS_URL . 'css/style.css', [], '1.0');
+        wp_enqueue_script('dib-crud-script', DB_CRUD_PLUGIN_ASSETS_URL . 'js/script.js', [], '1.0', true);
     }
 }

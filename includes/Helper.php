@@ -1,6 +1,6 @@
 <?php
 
-namespace Tarikul\PostViewCount;
+namespace Tarikul\DbCrud;
 
 /**
  * Helper Class 
@@ -21,7 +21,7 @@ class Helper
      */
     public function define_constant()
     {
-        define('POST_VIEW_COUNT_PLUGIN_DIR', plugin_dir_url(__DIR__));
-        define('POST_VIEW_COUNT_PLUGIN_ASSETS_URL', plugin_dir_url(__DIR__) . 'assets/');
+        define('DB_CRUD_PLUGIN_DIR', plugin_dir_url(__DIR__));
+        define('DB_CRUD_PLUGIN_ASSETS_URL', plugin_dir_url(__DIR__) . 'assets/');
     }
 }

@@ -1,11 +1,11 @@
 {
-    "name": "tarikul/post-view-count",
-    "description": "Post View count WordPress Plugin",
+    "name": "tarikul/db-crud",
+    "description": "Database Crud WordPress Plugin",
     "type": "wordpress-plugin",
     "license": "GPLv2",
     "autoload": {
         "psr-4": {
-            "Tarikul\\PostViewCount\\": "includes/"
+            "Tarikul\\DbCrud\\": "includes/"
         }
     },
     "authors": [

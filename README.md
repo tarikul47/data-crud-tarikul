@@ -13,3 +13,24 @@ Showing Post View Number by Specific Post shortcode.
 ## Screenshots
 
 ![App Screenshot](https://via.placeholder.com/468x300?text=App+Screenshot+Here)
+
+
+#. Admin page 
+
+#. Custom database 
+    - id 
+    - Name 
+    - Email 
+
+#. Admin page 
+
+#. Table List 
+    - Data display 
+    - Two buttons ( Edit | Delete )
+
+#. Tab ( Add New data )
+    - Form 
+        - 
+        - Edit and showing the information and able to update 
+        - Delete = Promt ( No | Yes )
+        - Yes => Delete the record 
