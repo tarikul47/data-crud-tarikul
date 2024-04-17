@@ -5,7 +5,7 @@ namespace Tarikul\DbCrud;
 /**
  * Helper Class 
  */
-class AdminPage
+class AdminPage extends Helper
 {
     /**
      * Constructor method 
@@ -33,8 +33,8 @@ class AdminPage
     function admin_page()
     {
         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'list';
-        var_dump(get_admin_url() . 'admin.php');
-        var_dump(add_query_arg('tab', 'list', get_admin_url('admin')));
+        //   var_dump(get_admin_url() . 'admin.php');
+        //  var_dump(add_query_arg('tab', 'list', get_admin_url('admin')));
         ?>
         <!-- Tabs -->
         <div class="mx-6 mt-6">
@@ -73,12 +73,22 @@ class AdminPage
                 switch ($active_tab) {
                     case 'add':
                         # code...
-                        echo "Add";
+                        $form_file = DB_CRUD_PLUGIN_DIR . 'templates/add-form.php';
+                        if (file_exists($form_file)) {
+                            require_once $form_file;
+                        } else {
+                            esc_html_e('File Doesn\'t exist', 'db-crud');
+                        }
                         break;
 
                     default:
                         # code...
-                        echo "List";
+                        $form_file = DB_CRUD_PLUGIN_DIR . 'templates/list-data.php';
+                        if (file_exists($form_file)) {
+                            require_once $form_file;
+                        } else {
+                            esc_html_e('File Doesn\'t exist', 'db-crud');
+                        }
                         break;
                 }
                 ?>
