@@ -28,5 +28,5 @@ use Tarikul\DbCrud\Core;
  * Main class Initialize 
  */
 if (!class_exists('Core')) {
-    new Core();
+    new Core(__FILE__);
 }
