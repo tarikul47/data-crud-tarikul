@@ -16,7 +16,7 @@ class Core extends Helper
     {
         global $wpdb;
         $this->plugin_file = $plugin_file;
-        $this->plugin_version = '1.0.3';
+        $this->plugin_version = '1.0.4';
         $this->table_name = $wpdb->prefix . 'db_crud'; //wp_custom_table
         // activation and deactivation hook 
         register_activation_hook($this->plugin_file, [$this, "activate"]);

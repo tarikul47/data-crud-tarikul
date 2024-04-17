@@ -17,6 +17,17 @@ class Helper
     }
 
     /**
+     * Check if data is empty.
+     *
+     * @param mixed $data The data to check.
+     * @return bool True if the data is empty, false otherwise.
+     */
+    public function is_empty($data)
+    {
+        return empty($data);
+    }
+
+    /**
      * Define all constant 
      */
     public function define_constant()

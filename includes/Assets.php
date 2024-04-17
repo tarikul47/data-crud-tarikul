@@ -24,5 +24,8 @@ class Assets extends Helper
     {
         wp_enqueue_style('db-crud-style', DB_CRUD_PLUGIN_ASSETS_URL . 'css/style.css', [], '1.0');
         wp_enqueue_script('dib-crud-script', DB_CRUD_PLUGIN_ASSETS_URL . 'js/script.js', [], '1.0', true);
+        wp_localize_script('dib-crud-script', 'data', [
+            'admin_url' => admin_url('admin-ajax.php'),
+        ]);
     }
 }

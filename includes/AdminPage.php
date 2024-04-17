@@ -14,6 +14,9 @@ class AdminPage extends Helper
     {
         //create an admin page
         add_action('admin_menu', [$this, 'add_admin_menu']);
+        // Handle form submissions
+        $this->handle_form_submission();
+        add_action('wp_ajax_db_crud_delete_entry', [$this, 'handle_ajax_delete_entry']);
 
     }
     /**
@@ -33,8 +36,6 @@ class AdminPage extends Helper
     function admin_page()
     {
         $active_tab = isset($_GET['tab']) ? $_GET['tab'] : 'list';
-        //   var_dump(get_admin_url() . 'admin.php');
-        //  var_dump(add_query_arg('tab', 'list', get_admin_url('admin')));
         ?>
         <!-- Tabs -->
         <div class="mx-6 mt-6">
@@ -96,4 +97,139 @@ class AdminPage extends Helper
         </div>
         <?php
     }
+
+
+    public function handle_form_submission()
+    {
+        // Verify nonce and user capabilities
+        if (!isset($_POST['db_crud_nonce']) || !wp_verify_nonce($_POST['db_crud_nonce'], 'db_crud') || !current_user_can('manage_options')) {
+            return;
+        }
+
+        // Define the fields to sanitize and validate
+        $fields = array(
+            'name' => 'sanitize_text_field',
+            'email' => 'sanitize_email'
+        );
+
+        // Sanitize and validate the form data
+        $sanitized_data = $this->sanitize_and_validate_form_data($_POST, $fields);
+
+        // Check if form data is valid
+        if ($sanitized_data === false) {
+            return;
+        }
+
+        // Determine the action mode (submit or update)
+        $action_mode = isset($_POST['submit']) ? 'submit' : (isset($_POST['update']) ? 'update' : '');
+
+        switch ($action_mode) {
+            case 'submit':
+                // Insert data into the database
+                $this->insert_data_into_database($sanitized_data);
+                break;
+            case 'update':
+                // Update data in the database
+                $this->update_data_in_database($sanitized_data);
+                break;
+            default:
+                // Invalid action mode
+                return;
+        }
+
+        // Redirect back to the admin page after form submission
+        wp_redirect(admin_url('admin.php?page=db-crud'));
+        exit;
+    }
+
+    /**
+     * Insert data into the database
+     */
+    private function insert_data_into_database($data)
+    {
+        global $wpdb;
+        $table_name = 'wp_db_crud';
+        $wpdb->insert($table_name, $data);
+    }
+
+    /**
+     * Update data in the database
+     */
+    private function update_data_in_database($data)
+    {
+        // Check if ID is set and numeric
+        $id = isset($_POST['id']) ? absint($_POST['id']) : 0;
+        if ($id > 0) {
+            global $wpdb;
+            $table_name = 'wp_db_crud';
+            $wpdb->update($table_name, $data, array('id' => $id));
+        }
+    }
+
+    /**
+     * Sanitize and validate form data
+     *
+     * @param array $data The form data to sanitize and validate
+     * @param array $fields An array mapping form field names to their respective sanitization/validation functions
+     * @return array|false Sanitized and validated form data, or false if validation fails
+     */
+    function sanitize_and_validate_form_data($data, $fields)
+    {
+        $sanitized_data = array();
+
+        foreach ($fields as $field_name => $sanitize_callback) {
+            if (isset($data[$field_name])) {
+                $sanitized_value = call_user_func($sanitize_callback, $data[$field_name]);
+                // Check if the sanitized value is empty after sanitization
+                if ($sanitized_value === '') {
+                    return false;
+                }
+                $sanitized_data[$field_name] = $sanitized_value;
+            } else {
+                // Field is missing
+                return false;
+            }
+        }
+
+        return $sanitized_data;
+    }
+
+
+    function handle_ajax_delete_entry()
+    {
+        error_log('Delete entry callback executed'); // Debugging statement
+
+        if (isset($_POST['id']) && is_numeric($_POST['id'])) {
+            // Sanitize the ID
+            $entry_id = sanitize_text_field($_POST['id']);
+
+            // Perform the deletion here
+            // Example: Delete the entry with the provided ID from the database
+            global $wpdb;
+            $table_name = 'wp_db_crud'; // Replace with your actual table name
+            $result = $wpdb->delete(
+                $table_name,
+                array('id' => $entry_id),
+                array('%d')
+            );
+
+            // Send response back to the client-side JavaScript
+            if ($result !== false) {
+                // Deletion was successful
+                wp_send_json_success(
+                    [
+                        'new_url' => admin_url('admin.php?page=db-crud&succeess=true')
+                    ]
+                );
+            } else {
+                // Deletion failed
+                wp_send_json_error(array('message' => 'Failed to delete entry'));
+            }
+        } else {
+            // Invalid request
+            wp_send_json_error(array('message' => 'Invalid request'));
+        }
+    }
+
+
 }
