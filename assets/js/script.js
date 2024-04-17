@@ -15,10 +15,9 @@ jQuery(document).ready(function ($) {
     $.post(ajaxurl, data, function (response) {
       // Handle success or error response
       if (response.success) {
-        // Optionally, update the UI to reflect the deletion
         // For example, remove the deleted entry from the DOM
         console.log(response);
-       window.location.href = response.data.new_url;
+        window.location.href = response.data.new_url;
       } else {
         alert("Error: " + response.data.message);
       }
