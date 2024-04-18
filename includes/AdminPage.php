@@ -154,7 +154,6 @@ class AdminPage extends Helper
             // Perform the deletion here
             // Example: Delete the entry with the provided ID from the database
             global $wpdb;
-           // $table_name = 'wp_db_crud'; // Replace with your actual table name
             $result = $wpdb->delete(
                 DB_CRUD_PLUGIN_TBALE_NAME,
                 array('id' => $entry_id),

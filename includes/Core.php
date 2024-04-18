@@ -16,8 +16,7 @@ class Core extends Helper
     {
         global $wpdb;
         $this->plugin_file = $plugin_file;
-        $this->plugin_version = '1.0.4';
-        //  $this->table_name = $wpdb->prefix . 'db_crud'; //wp_custom_table
+        $this->plugin_version = '1.0.0';
         // activation and deactivation hook 
         register_activation_hook($this->plugin_file, [$this, "activate"]);
         register_deactivation_hook($this->plugin_file, [$this, "deactivate"]);
@@ -69,7 +68,6 @@ class Core extends Helper
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        // $table_name = $this->table_name; // Store table name in a local variable
 
         // SQL query to create the table
         $sql = "CREATE TABLE DB_CRUD_PLUGIN_TBALE_NAME (
