@@ -7,7 +7,6 @@ namespace Tarikul\DbCrud;
  */
 class Helper
 {
-    private $table_name;
     /**
      * Constructor method 
      */
@@ -27,7 +26,6 @@ class Helper
     {
         return empty($data);
     }
-
     /**
      * Define all constant 
      */
@@ -68,13 +66,25 @@ class Helper
         return $sanitized_data;
     }
 
+
+    /**
+     * Get a row by id 
+     */
+    public function get_data_into_database($id)
+    {
+        global $wpdb;
+        $prepared_statement = $wpdb->prepare("SELECT * FROM " . DB_CRUD_PLUGIN_TBALE_NAME . " WHERE id = %d", $id);
+        $row = $wpdb->get_row($prepared_statement, ARRAY_A);
+        return $row;
+    }
+
     /**
      * Insert data into the database
      */
     public function insert_data_into_database($data)
     {
         global $wpdb;
-        $wpdb->insert(DB_CRUD_PLUGIN_TBALE_NAME, $data);
+        $wpdb->insert(DB_CRUD_PLUGIN_TBALE_NAME, $data, array('%s', '%s'));
     }
 
     /**
@@ -86,7 +96,7 @@ class Helper
         $id = isset($_POST['id']) ? absint($_POST['id']) : 0;
         if ($id > 0) {
             global $wpdb;
-            $wpdb->update(DB_CRUD_PLUGIN_TBALE_NAME, $data, array('id' => $id));
+            $wpdb->update(DB_CRUD_PLUGIN_TBALE_NAME, $data, array('id' => $id), array('%s', '%s'), array('%d'));
         }
     }
 }

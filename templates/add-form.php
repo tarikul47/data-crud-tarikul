@@ -1,15 +1,11 @@
 <?php
 $id = isset($_GET["id"]) ? intval($_GET["id"]) : 0;
-var_dump($id);
-
 global $wpdb;
-$table_name = $wpdb->prefix . 'db_crud'; // Replace 'your_table_name' with your actual table name
-
-// Example query to fetch one row from the table
-$row = $wpdb->get_row("SELECT * FROM $table_name where id= $id", ARRAY_A);
-
-print_r($row);
-
+$row = [];
+if ($id > 0) {
+    // Example query to fetch one row from the table
+    $row = $this->get_data_into_database($id);
+}
 ?>
 
 <h3 class=" py-4 text-lg text-center font-semibold"><?php echo $id ? 'Update Data' : 'Add New Data'; ?></h3>

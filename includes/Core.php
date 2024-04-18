@@ -8,7 +8,7 @@ class Core extends Helper
 {
     private $plugin_file;
     private $plugin_version;
-    private $table_name;
+    //   private $table_name;
     /**
      * Constructor method 
      */
@@ -17,7 +17,7 @@ class Core extends Helper
         global $wpdb;
         $this->plugin_file = $plugin_file;
         $this->plugin_version = '1.0.4';
-        $this->table_name = $wpdb->prefix . 'db_crud'; //wp_custom_table
+        //  $this->table_name = $wpdb->prefix . 'db_crud'; //wp_custom_table
         // activation and deactivation hook 
         register_activation_hook($this->plugin_file, [$this, "activate"]);
         register_deactivation_hook($this->plugin_file, [$this, "deactivate"]);
@@ -69,10 +69,10 @@ class Core extends Helper
     {
         global $wpdb;
         $charset_collate = $wpdb->get_charset_collate();
-        $table_name = $this->table_name; // Store table name in a local variable
+        // $table_name = $this->table_name; // Store table name in a local variable
 
         // SQL query to create the table
-        $sql = "CREATE TABLE $table_name (
+        $sql = "CREATE TABLE DB_CRUD_PLUGIN_TBALE_NAME (
             id mediumint(9) NOT NULL AUTO_INCREMENT,
             name varchar(50) NOT NULL,
             email varchar(50) NOT NULL,
@@ -86,12 +86,12 @@ class Core extends Helper
         dbDelta($sql);
 
         // Check if the table was created successfully
-        if ($wpdb->get_var("SHOW TABLES LIKE '$table_name'") != $table_name) {
-            error_log("Error creating database table - Table $table_name not created.");
+        if ($wpdb->get_var("SHOW TABLES LIKE DB_CRUD_PLUGIN_TBALE_NAME") != DB_CRUD_PLUGIN_TBALE_NAME) {
+            error_log("Error creating database table - Table DB_CRUD_PLUGIN_TBALE_NAME not created.");
         } else {
             // Insert demo data into the table
             $wpdb->insert(
-                $table_name,
+                DB_CRUD_PLUGIN_TBALE_NAME,
                 array(
                     'name' => 'John Doe',
                     'email' => 'john@example.com'
@@ -99,7 +99,7 @@ class Core extends Helper
             );
 
             $wpdb->insert(
-                $table_name,
+                DB_CRUD_PLUGIN_TBALE_NAME,
                 array(
                     'name' => 'Jane Smith',
                     'email' => 'jane@example.com'
