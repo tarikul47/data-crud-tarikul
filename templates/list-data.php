@@ -45,17 +45,23 @@ if (empty($data)) {
                         <?php echo $row['email']; ?>
                     </td>
                     <td class="px-6 py-4">
-                        <a href="<?php
-                        echo add_query_arg(
-                            [
-                                'page' => 'db-crud',
-                                'tab' => 'add',
-                                'id' => $row['id']
-                            ],
-                            get_admin_url() . 'admin.php'
-                        ) ?>" class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Edit</a>
-                        <a href="" class="delete-entry" data-id="<?php echo $row['id']; ?>"
-                            class="font-medium text-blue-600 dark:text-blue-500 hover:underline">Delete</a>
+                        <button type="button"
+                            class="focus:outline-none text-white bg-green-700  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">
+                            <a href="<?php
+                            echo add_query_arg(
+                                [
+                                    'page' => 'db-crud',
+                                    'tab' => 'add',
+                                    'id' => $row['id']
+                                ],
+                                get_admin_url() . 'admin.php'
+                            ) ?>">Edit</a>
+                        </button>
+
+                        <button type="button" data-id="<?php echo $row['id']; ?>"
+                            class="delete-entry bg-red-700 focus:outline-none text-white  font-medium rounded-lg text-sm px-5 py-2.5 me-2 mb-2">Delete
+                        </button>
+
                     </td>
                 </tr>
             <?php } ?>
