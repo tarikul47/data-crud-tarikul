@@ -7,6 +7,7 @@ namespace Tarikul\DbCrud;
  */
 class AdminPage extends Helper
 {
+    private $table_name;
     /**
      * Constructor method 
      */
@@ -141,59 +142,6 @@ class AdminPage extends Helper
         wp_redirect(admin_url('admin.php?page=db-crud'));
         exit;
     }
-
-    /**
-     * Insert data into the database
-     */
-    private function insert_data_into_database($data)
-    {
-        global $wpdb;
-        $table_name = 'wp_db_crud';
-        $wpdb->insert($table_name, $data);
-    }
-
-    /**
-     * Update data in the database
-     */
-    private function update_data_in_database($data)
-    {
-        // Check if ID is set and numeric
-        $id = isset($_POST['id']) ? absint($_POST['id']) : 0;
-        if ($id > 0) {
-            global $wpdb;
-            $table_name = 'wp_db_crud';
-            $wpdb->update($table_name, $data, array('id' => $id));
-        }
-    }
-
-    /**
-     * Sanitize and validate form data
-     *
-     * @param array $data The form data to sanitize and validate
-     * @param array $fields An array mapping form field names to their respective sanitization/validation functions
-     * @return array|false Sanitized and validated form data, or false if validation fails
-     */
-    function sanitize_and_validate_form_data($data, $fields)
-    {
-        $sanitized_data = array();
-
-        foreach ($fields as $field_name => $sanitize_callback) {
-            if (isset($data[$field_name])) {
-                $sanitized_value = call_user_func($sanitize_callback, $data[$field_name]);
-                // Check if the sanitized value is empty after sanitization
-                if ($sanitized_value === '') {
-                    return false;
-                }
-                $sanitized_data[$field_name] = $sanitized_value;
-            } else {
-                // Field is missing
-                return false;
-            }
-        }
-
-        return $sanitized_data;
-    }
-
 
     function handle_ajax_delete_entry()
     {
